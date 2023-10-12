@@ -1,0 +1,46 @@
+{% extends 'layout.jinja' %}
+{% block content %}
+<div class = text-center>
+    <p class="display-4">Train the model</p>
+    <p class="h4 py-3">Enter values of only 0 or 1</p>
+    <form id="form" method="post">
+        <div class="d-flex justify-content-center">
+            <div class = input-field>
+                {{ form.hidden_tag() }}
+                {{ form.user_input(size=32, class="form-control form-control-lg", id="binary-input", style="Width: 500px", autocomplete="off") }}
+                <p>Characters Left: <span class="font-weight-bold text-danger" id="charCount">32</span></p>
+                {{ form.submit(class="btn btn-outline-info", id="submitButton", style="display: none;") }}
+                <div class="py-5">
+                    Contribute to the dataset that trains the model on human submitted values!
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var textField = document.getElementById('binary-input');
+        var charCount = document.getElementById('charCount');
+        var submitButton = document.getElementById('submitButton');
+        var form = document.getElementById('form');
+        textField.value = '';
+        textField.focus();
+
+        textField.addEventListener('input', function() {
+            var value = textField.value;
+            var sanitizedValue = value.replace(/[^01]/g, '');
+            textField.value = sanitizedValue;
+
+            var remainingChars = 32 - sanitizedValue.length;
+            charCount.textContent = remainingChars;
+
+            if (remainingChars <= 0) {
+                submitButton.click()
+                textField.value = '';
+                charCount.textContent = 32;
+            }
+        });
+    });
+</script>
+
+{% endblock content %}

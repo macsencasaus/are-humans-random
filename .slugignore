@@ -1,0 +1,12 @@
+# Cache
+__pycache__/
+
+# Virtual environment
+.venv/
+
+# db
+instance/
+
+# git
+.git
+.gitignore

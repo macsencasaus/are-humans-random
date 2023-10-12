@@ -1,0 +1,63 @@
+{% extends 'layout.jinja' %}
+{% block content %}
+<div class = text-center>
+    <p class="display-4">Test the model</p>
+    <p class="h4 py-3">Enter values of only 0 or 1</p>
+    <button class="btn btn-outline-info my-2" id="generateRandom">Generate Random Computer Sequence</button>
+    <form id="form" method="post">
+        <div class="d-flex justify-content-center">
+            <div class = input-field>
+                {{ form.hidden_tag() }}
+                {{ form.user_input(size=32, class="form-control form-control-lg", id="binary-input", style="Width: 500px", autocomplete="off") }}
+                <p>Characters Left: <span class="font-weight-bold text-danger" id="charCount">32</span></p>
+                {{ form.submit(class="btn btn-outline-info", id="submitButton") }}
+            </div>
+        </div>
+    </form>
+    {% if last_submission %}
+    <div class="h3 mt-5">Last Submission<div>   
+    <div class="d-flex justify-content-center">
+        <input type="text" id="disabledTextInput" class="form-control" placeholder={{ last_submission }} style="width: 302px;" disabled>
+    </div>
+    <div class="display-1 text-weighted-bold">{{ ann_prob }}%</div>
+    {% else %}
+    <div class="py-5">
+        See if you are truly random!
+    </div>
+    {% endif %}
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+var textField = document.getElementById('binary-input');
+    var charCount = document.getElementById('charCount');
+    var submitButton = document.getElementById('submitButton');
+    var generateRandomBtn = document.getElementById('generateRandom')
+    textField.value = '';
+    textField.focus();
+
+    textField.addEventListener('input', function() {
+        var value = textField.value;
+        var sanitizedValue = value.replace(/[^01]/g, '');
+        textField.value = sanitizedValue;
+
+        var remainingChars = 32 - sanitizedValue.length;
+        charCount.textContent = remainingChars;
+    });
+
+    generateRandomBtn.addEventListener('click', function(){
+        textField.value = generateRandomBinaryString();
+        charCount.textContent = 0;
+    })
+    
+});
+
+function generateRandomBinaryString() {
+    var binaryString = '';
+    for(var i = 0; i < 32; i++){
+        var randomValue = Math.round(Math.random());
+        binaryString += randomValue;
+    }
+    return binaryString;
+}
+</script>
+{% endblock content %}

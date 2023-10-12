@@ -1,0 +1,5 @@
+flask
+Flask-WTF
+flask_sqlalchemy
+tensorflow
+numpy
