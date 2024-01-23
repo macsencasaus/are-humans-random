@@ -15,11 +15,19 @@
         </div>
     </form>
     {% if last_submission %}
+    <hr>
     <div class="h3 mt-5">Last Submission<div>   
     <div class="d-flex justify-content-center">
         <input type="text" id="disabledTextInput" class="form-control" placeholder={{ last_submission }} style="width: 302px;" disabled>
+        {# <div class="badge bg-secondary">{{ last_submission }}</div> #}
     </div>
-    <div class="display-1 text-weighted-bold">{{ ann_prob }}%</div>
+        {% if ann_prob > 50 %}
+            <div class="display-3 text-weighted-bold">Human!</div>
+            <div class="h4">The model is <span class="badge bg-success text-weighted-bold">{{ ann_prob }}%</span> confident</div>
+        {% else %}
+            <div class="display-3 text-weighted-bold">Computer Generated!</div>
+            <div class="h4">The model is <span class="badge bg-success text-weighted-bold">{{ 100-ann_prob }}%</span> confident</div>
+        {% endif %}
     {% else %}
     <div class="py-5">
         See if you are truly random!

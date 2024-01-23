@@ -6,3 +6,6 @@ __pycache__/
 
 # db
 instance/
+
+# models
+ann_models/
