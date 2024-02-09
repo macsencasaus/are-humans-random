@@ -26,14 +26,12 @@ model = Sequential([
 model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 
 def load_weights():
-    
     with app.app_context():
         last_model = Ann_Model.query.order_by(Ann_Model.id.desc()).first().weight_path
 
     model.load_weights(last_model)
 
 def verify_train():
-
     with app.app_context():
         try:
             last_trained_on = Ann_Model.query.order_by(Ann_Model.id.desc()).first().trained_on
